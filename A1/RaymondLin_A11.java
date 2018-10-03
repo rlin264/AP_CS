@@ -1,6 +1,11 @@
+/* File Name: RaymondLin_A11.java
+ * This program reads three natural numbers A, B and N followed by a sequence of N natural numbers
+ * If A < B, the program prints the number of elements that are multiples of A and not factors of B
+ * Else, the program prints the number of terms equal to either A+B or A*B.
+*/
 import java.util.*;
 
-public class RaymondLin_A21 
+public class RaymondLin_A11 
 {
 	public static void main(String[] args)
 	{

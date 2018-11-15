@@ -12,25 +12,27 @@ public class RaymondLin_220
 	{
 		Scanner kbd = new Scanner(System.in);
 		int size = 3;//kbd.nextInt();
-		int[] arr = new int[3];
-		int[] arr2 = new int[4];
-		int lower = 0;//kbd.nextInt();
-		int upper = 9;//kbd.nextInt();
+		int[] arr = new int[10];
+		//int[] arr2 = new int[4];
+		int lower = -5;
+		int upper = 5;
 		//create array
 		randomize(arr, lower, upper);
-		randomize(arr2, lower, upper);
+		//randomize(arr2, lower, upper);
 		System.out.println(Arrays.toString(arr));
 		//shuffle(arr);
 		//reverse(arr);
 		//shift(arr,3);
-		sortDigits(arr);
-		sortDigits(arr2);
+		//split(arr);
+		bubbleSort(arr);
+		//sortDigits(arr);
+		//sortDigits(arr2);
 		//selectionSort(arr);
 		//insertionSort(arr);
 		System.out.println(Arrays.toString(arr));
-		System.out.println(Arrays.toString(arr2));
-		int[] c = merge(arr, arr2);
-		System.out.println(Arrays.toString(c));
+//		System.out.println(Arrays.toString(arr2));
+//		int[] c = merge(arr, arr2);
+//		System.out.println(Arrays.toString(c));
 		kbd.close();
 	}
 	static public void swap ( int [ ] data , int n, int m )
@@ -87,6 +89,43 @@ public class RaymondLin_220
 				data[j] = temp;
 				temp = previous;	
 			}
+		}
+	}
+	//225
+	public static void split(int[] data)
+	{
+		int left = 0;
+		int right = data.length - 1;
+		while(left < right)
+		{
+			if(data[left] < 0)
+			{
+				left++;
+			}
+			else
+			{
+				swap(data,left,right);
+				right--;
+			}
+		}
+	}
+	//226
+	public static void bubbleSort(int[] data)
+	{
+		boolean sorted = false;
+		int sorted_i = data.length-1;
+		while(!sorted)
+		{
+			sorted = true;
+			for(int i = 0; i < sorted_i; i++)
+			{
+				if(data[i] > data[i+1])
+				{
+					swap(data, i, i+1);
+					sorted = false;
+				}
+			}
+			sorted_i--;
 		}
 	}
 	//227
@@ -170,6 +209,29 @@ public class RaymondLin_220
 				c[ic] = b[ib];
 				ib++;
 			}
+			ic++;
+		}
+		System.out.println(ia + " " + ib);
+//		while(ia<a.length)
+//		{
+//			c[ic] = a[ia];
+//			ia++;
+//			ic++;
+//		}
+//		while(ib<b.length)
+//		{
+//			c[ic] = b[ib];
+//			ib++;
+//			ic++;
+//		}
+		for(int i = ia; i < a.length; i++)
+		{
+			c[ic] = a[i];
+			ic++;
+		}
+		for(int i = ib; i < b.length; i++)
+		{
+			c[ic] = b[i];
 			ic++;
 		}
 		

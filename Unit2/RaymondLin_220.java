@@ -11,20 +11,26 @@ public class RaymondLin_220
 	public static void main(String[] args) 
 	{
 		Scanner kbd = new Scanner(System.in);
-		int size = 5;//kbd.nextInt();
-		int[] arr = new int[size];
-		int lower = 1;//kbd.nextInt();
-		int upper = 10;//kbd.nextInt();
+		int size = 3;//kbd.nextInt();
+		int[] arr = new int[3];
+		int[] arr2 = new int[4];
+		int lower = 0;//kbd.nextInt();
+		int upper = 9;//kbd.nextInt();
 		//create array
 		randomize(arr, lower, upper);
+		randomize(arr2, lower, upper);
 		System.out.println(Arrays.toString(arr));
 		//shuffle(arr);
 		//reverse(arr);
 		//shift(arr,3);
 		sortDigits(arr);
+		sortDigits(arr2);
 		//selectionSort(arr);
 		//insertionSort(arr);
 		System.out.println(Arrays.toString(arr));
+		System.out.println(Arrays.toString(arr2));
+		int[] c = merge(arr, arr2);
+		System.out.println(Arrays.toString(c));
 		kbd.close();
 	}
 	static public void swap ( int [ ] data , int n, int m )
@@ -87,8 +93,23 @@ public class RaymondLin_220
 	public static void sortDigits(int[] data)
 	{
 		if(data == null || data.length < 2) return;
-		
-		//using another array to sort
+		/* create array size 10
+		 * read a digit. If 1 increase number of index 1 in second array by one etc.
+		 */
+		int digits[] = new int[10];
+		for(int i = 0;i < data.length; i++)
+		{
+			digits[data[i]]++;
+		}
+		int ind = 0;
+		for(int i = 0;i < digits.length; i++)
+		{
+			for(int j = 0; j < digits[i]; j++)
+			{
+				data[ind] = i;
+				ind++;
+			}
+		}
 	}
 	//228
 	public static void selectionSort(int[] data)
@@ -129,6 +150,30 @@ public class RaymondLin_220
 			first ++;
 		}
 		
+	}
+	//2210
+	public static int[] merge(int[] a, int[] b)
+	{
+		int[] c = new int[a.length + b.length];
+		int ia = 0;
+		int ib = 0;
+		int ic = 0;
+		while(ia < a.length && ib < b.length)
+		{
+			if(a[ia] < b[ib])
+			{
+				c[ic] = a[ia];
+				ia++;
+			}
+			else
+			{
+				c[ic] = b[ib];
+				ib++;
+			}
+			ic++;
+		}
+		
+		return c;
 	}
 
 }

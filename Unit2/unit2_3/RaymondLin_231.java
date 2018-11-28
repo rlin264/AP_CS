@@ -5,14 +5,21 @@ public class RaymondLin_231 {
 
 	public static void main(String[] args) 
 	{
-		int[][] matrix = new int[6][10];
+		int n = (int)(Math.random()*6+1);
+		int[][] matrix = new int[n][];
+		
 		for(int row = 0; row < matrix.length; row++)
 		{
+			int m = (int)(Math.random()*6+1);
+			//int m = row+1;
+			matrix[row] = new int[m];
+			
 			for(int col = 0; col < matrix[row].length; col++)
 			{
 				matrix[row][col] = (int)(Math.random()*10);
 			}
 		}
+		
 		print(matrix);
  	}
 	

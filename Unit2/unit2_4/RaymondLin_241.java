@@ -5,7 +5,7 @@ public class RaymondLin_241
 {
 	public static void main(String[] args)
 	{
-		String title = "Chez Serguei";
+		String title = "Chez ICS";
 		String[] items = new String[]{"tranquility", "walk", "java", "holy smoke"};
 		menu(title, items);
 	}

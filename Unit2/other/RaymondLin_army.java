@@ -1,5 +1,4 @@
 package other;
-
 import java.util.*;
 //n-m
 //range of first zero last 1.
@@ -11,29 +10,33 @@ public class RaymondLin_army
 
 	public static void main(String[] args) 
 	{
-		int[] data = new int[30];
+		int[] data = new int[20];
 		for(int i = 0; i < data.length;i++)
 		{
 			data[i] = (int)(Math.random()*2);
 		}
-		System.out.println(Arrays.toString(data));
+		//int[] data = new int[] {1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 1};
+		//System.out.println(Arrays.toString(data));
 		//System.out.println(getTurns(data));
-		System.out.println(getTurns2(data));
-		System.out.println(bubbleSort(data));
+		System.out.println("s "+getTurns2(data));
+		System.out.println("b "+bubbleSort(data));
 
 	}
 	public static int getTurns2(int[] army)
 	{
 		int n = 0;
 		int c = 0;
-		int n_ones = 0;
 		int ind1 = 0;
-		int ind2 = 0;
+		int ind2 = army.length;
+		int consec_ones = 0;
+		int consec_zeroes = 0;
 		boolean found1 = false;
-		boolean found2 = false;
+		boolean found2 = false; //found last zero
+		boolean sub = false; //while loop executed or not.
 		//first 1, last 0
 		for(int i = 0; i < army.length; i++)
 		{
+			sub = false;
 			if(army[i] == 1 && !found1) 
 			{
 				ind1 = i; 
@@ -43,20 +46,33 @@ public class RaymondLin_army
 			if(army[army.length - 1- i] == 0 && !found2) 
 			{
 				ind2 = army.length - 1- i;
-				//System.out.println("ind2 " + ind2);
 				found2 = true;
 			}
-			if(found2 == false || i < ind2)
+			if(found1 && i < army.length)
 			{
-				int a = i;
-				while(army[i] == 1)
+				consec_ones = 0;
+				if(army[i] == 1 && i < ind2) c++;
+				while(i < army.length && army[i] == 1)
 				{
+					sub = true;
+					if(army[army.length - 1- i] == 0 && !found2) 
+					{
+						ind2 = army.length - 1- i;
+						found2 = true;
+					}
 					i++;
+					consec_ones++;
 				}
-				if(i - a > 0) c++;
-				//System.out.println("asd " + (a-i));
+				if(sub)
+				{
+					i--;
+					if(consec_ones < consec_zeroes) c++; //dunno about this...
+					consec_zeroes = 0;
+				}
+				else consec_zeroes++;
 			}
 		}
+		System.out.println(Arrays.toString(army));
 		System.out.println("c " + c);
 		n = ind2-ind1+1;
 		System.out.println("ind1 " + ind1 + " ind2 " + ind2);
@@ -116,8 +132,15 @@ public class RaymondLin_army
 			}
 			//sorted_i--;
 			cnt++;
-			System.out.println(Arrays.toString(data));
+			//System.out.println(Arrays.toString(data));
 		}
 		return cnt-1;
 	}
 }
+/* test cases:
+ * 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0  s 16 b 12
+ * 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1  s 9  b 7
+ */
+/*
+ * gap of ones <= last wait
+ */

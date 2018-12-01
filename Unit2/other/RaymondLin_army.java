@@ -50,6 +50,7 @@ public class RaymondLin_army
 			}
 			if(found1 && i < army.length)
 			{
+				//System.out.println("ones" + consec_ones);
 				consec_ones = 0;
 				if(army[i] == 1 && i < ind2) c++;
 				while(i < army.length && army[i] == 1)
@@ -66,17 +67,18 @@ public class RaymondLin_army
 				if(sub)
 				{
 					i--;
-					if(consec_ones < consec_zeroes) c++; //dunno about this...
+					if(consec_ones <= consec_zeroes - 1 ) {
+						System.out.println("ASD");
+						c++; //dunno about this...
+					}
+					System.out.println("zeroes" + consec_zeroes);
 					consec_zeroes = 0;
 				}
 				else consec_zeroes++;
 			}
 		}
 		System.out.println(Arrays.toString(army));
-		System.out.println("c " + c);
 		n = ind2-ind1+1;
-		System.out.println("ind1 " + ind1 + " ind2 " + ind2);
-		System.out.println("n " + n);
 		return n-c;
 	}
 	public static int getTurns(int[] army) 

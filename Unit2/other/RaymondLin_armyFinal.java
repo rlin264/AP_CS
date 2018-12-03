@@ -7,9 +7,9 @@ public class RaymondLin_armyFinal {
 		int a = 0;
 		int b = 0;
 		
-		int n = 1000;
+		int n = 1;
 		int cnt = 0;
-		int[] data = new int[100];
+		int[] data = new int[1000000];
 		for(int j = 0; j < n; j++)
 		{
 			for(int i = 0; i < data.length;i++)

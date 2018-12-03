@@ -24,4 +24,7 @@ public class RaymondLin_252
  * Input: First line: n number of soldiers. second line: positions of soldiers. (0 is left, 1 is right).
  * Output: Time in seconds to turn, if possible.
  * Condition: single pass algorithm. Ideally no array.
+ * 
+ * 4
+ * RLRL
  */

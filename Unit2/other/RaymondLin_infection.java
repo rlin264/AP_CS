@@ -6,18 +6,17 @@ public class RaymondLin_infection
 {
 	public static void main(String[] args)
 	{
-//		int[][] map = new int[3][3];
-//		for(int i = 0; i < map.length; i++)
-//		{
-//			for(int j = 0; j < map[i].length; j++)
-//			{
-//				
-//				int a = (int)(Math.random()*5);
-//				if(a > 1)map[i][j] = 0;
-//				else map[i][j] = 1;
-//			}
-//		}
-		int[][] map = new int[][]{{0,0,0},{1,1,0},{1,0,0}};
+		int[][] map = new int[5][5];
+		for(int i = 0; i < map.length; i++)
+		{
+			for(int j = 0; j < map[i].length; j++)
+			{
+				int a = (int)(Math.random()*5);
+				if(a > 1)map[i][j] = 0;
+				else map[i][j] = 1;
+			}
+		}
+//		int[][] map = new int[][]{{0,0,0},{1,1,0},{1,0,0}};
 		for(int i = 0; i < map.length; i++)
 		{
 			System.out.println(Arrays.toString(map[i]));
@@ -31,6 +30,7 @@ public class RaymondLin_infection
 		 * Cell gets infected if it has more than one infected neighbour
 		 */
 		boolean done_infecting = false;
+		boolean has_zeros = false; //scenario when there are still zeros at the end.
 		int cnt;
 		int turns = 0;
 		int rows = map.length;
@@ -38,7 +38,7 @@ public class RaymondLin_infection
 		int infections = 0;
 		while(!done_infecting)
 		{
-			done_infecting = true;
+			done_infecting = false;
 			infections = 0;
 			for(int i = 0; i < rows; i++)
 			{
@@ -50,8 +50,6 @@ public class RaymondLin_infection
 					if(j+1 < cols && map[i][j+1] != 0) cnt++;
 					if(i-1 >= 0 && map[i-1][j] != 0) cnt++;
 					if(j-1 >= 0 && map[i][j-1] != 0) cnt++;
-					if(cnt > 0) done_infecting = false; //this will not work. I need a way to stop the loop when no infections are made
-//					System.out.println(i + " "+ j + " " + cnt);
 					if(cnt > 1) 
 					{
 						map[i][j] = turns+2;
@@ -59,14 +57,14 @@ public class RaymondLin_infection
 					}
 				}
 			}
-			turns++;
-			if(infections > 0) done_infecting = false;
+			if(infections == 0) done_infecting = true;
+			else turns++;
 			System.out.println();
 			for(int i = 0; i < map.length; i++)
 			{
 				System.out.println(Arrays.toString(map[i]));
 			}
 		}
-		return -1;
+		return turns;
 	}
 }

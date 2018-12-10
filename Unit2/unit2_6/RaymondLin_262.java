@@ -1,8 +1,8 @@
-package other;
+package unit2_6;
 
 import java.util.Arrays;
 
-public class RaymondLin_infection 
+public class RaymondLin_262 
 {
 	public static void main(String[] args)
 	{

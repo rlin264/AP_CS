@@ -1,9 +1,9 @@
-package other;
+package unit2_6;
 /*
  * Weather Forecast problem
  * A cell is equal to the average of the four surrounding ones.
  */
-public class RaymondLin_weather 
+public class RaymondLin_261 
 {
 
 	public static void main(String[] args) 

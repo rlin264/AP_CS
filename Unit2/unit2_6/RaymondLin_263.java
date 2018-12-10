@@ -1,6 +1,6 @@
-package other;
+package unit2_6;
 
-public class RaymondLin_formatText 
+public class RaymondLin_263 
 {
 	public static void main(String[] args) 
 	{

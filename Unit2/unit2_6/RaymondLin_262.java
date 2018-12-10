@@ -6,17 +6,19 @@ public class RaymondLin_262
 {
 	public static void main(String[] args)
 	{
+		//generate a random 5x5 map
 		int[][] map = new int[5][5];
 		for(int i = 0; i < map.length; i++)
 		{
 			for(int j = 0; j < map[i].length; j++)
 			{
+				//sets an element to value 1 if the variable a, a random value from 0 to 9, is greater than 1, else sets it to 0
 				int a = (int)(Math.random()*10);
 				if(a > 1)map[i][j] = 0;
 				else map[i][j] = 1;
 			}
 		}
-//		int[][] map = new int[][]{{0,0,0},{1,1,0},{1,0,0}};
+		//print out the infection map
 		for(int i = 0; i < map.length; i++)
 		{
 			System.out.println(Arrays.toString(map[i]));
@@ -30,7 +32,6 @@ public class RaymondLin_262
 		 * Cell gets infected if it has more than one infected neighbour
 		 */
 		boolean done_infecting = false;
-		boolean has_zeros = false; //scenario when there are still zeros at the end.
 		int cnt;
 		int turns = 0;
 		int rows = map.length;
@@ -45,7 +46,9 @@ public class RaymondLin_262
 				for(int j = 0; j < cols; j++)
 				{
 					cnt = 0;
-					if(map[i][j] != 0) continue;
+					if(map[i][j] != 0){
+						continue;
+					}
 					if(i+1 < rows && map[i+1][j] != 0) cnt++;
 					if(j+1 < cols && map[i][j+1] != 0) cnt++;
 					if(i-1 >= 0 && map[i-1][j] != 0) cnt++;
@@ -59,11 +62,10 @@ public class RaymondLin_262
 			}
 			if(infections == 0) done_infecting = true;
 			else turns++;
-			System.out.println();
-			for(int i = 0; i < map.length; i++)
-			{
-				System.out.println(Arrays.toString(map[i]));
-			}
+		}
+		for(int i = 0; i < rows; i++)
+		{
+			for(int j = 0; j < cols; j++) if(map[i][j] == 0) return -1;
 		}
 		return turns;
 	}

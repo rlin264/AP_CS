@@ -1,10 +1,13 @@
 package unit2_6;
 
-import java.util.Arrays;
-/* return # of days it will take the virus to infect the entire territory
+/* File: RaymondLin_262.java
+ * return # of days it will take the virus to infect the entire territory
  * If cannot infect whole territory, return -1.
  * Cell gets infected if it has more than one infected neighbour
  */
+
+import java.util.Arrays;
+
 public class RaymondLin_262 
 {
 	public static void main(String[] args)

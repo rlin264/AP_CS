@@ -1,8 +1,9 @@
 package unit2_6;
 
-/* remove extra spaces - including spaces between last word of a sentence and punctuation
- * Add spaces where needed (after periods ,commas or other punctuation
- * 	ab.cd -> ab. cd
+/* File: RaymondLin_263.java
+ * remove extra spaces - including spaces between last word of a sentence and punctuation
+ * Add spaces where needed (after periods ,commas or other punctuation)
+ * 	 ab.cd -> ab. cd
  * replace '$' with name
  * replace '@' with he she they
  * replace '#' with his her their

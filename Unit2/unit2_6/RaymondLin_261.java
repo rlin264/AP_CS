@@ -1,8 +1,12 @@
 package unit2_6;
 
-/*
+/* File: RaymondLin_261
  * Weather Forecast problem
- * A cell is equal to the average of the four surrounding ones.
+ * A cell is equal to the average of the four surrounding ones if it is not on the edges or corners
+ * If it is on the left/right edges it is the average of the top and bottom adjacent cells
+ * If it is on the top/bottom edges it is the average of the left and right adjacent cells
+ * If it is a corner it is the average of the adjacent cells
+ * Return the forecast array
  */
 public class RaymondLin_261 
 {

@@ -27,13 +27,12 @@ public class RaymondLin_soldiers {
 		int lastWait = 0;
 		int lastSteps = 0;
 		int prev_L = 0;
-		boolean has_L = false;
 		while(army.charAt(pos) == 'L') //ignore leading L's.
 		{
 			pos++;
 			if(pos == len) return 0;
 		}
-		prev_L = pos;
+
 		while(pos < len)
 		{
 			if(army.charAt(pos) == 'R')
@@ -43,19 +42,10 @@ public class RaymondLin_soldiers {
 			if(army.charAt(pos) == 'L')
 			{
 				gapOfR = pos-prev_L-1;
-				if(!has_L)
-				{
-					steps = numR;
-					has_L = true;
-					prev_L = pos;
-				}
-				else
-				{
-					if(army.charAt(pos - 1) == 'L') wait++;
-					if(gapOfR <= lastWait) steps = lastSteps+1;
-					else steps = numR;
-					if(steps < numR) steps = numR;
-				}
+				if(army.charAt(pos - 1) == 'L') wait++;
+				if(gapOfR <= lastWait) steps = lastSteps+1;
+				else steps = numR;
+				if(steps < numR) steps = numR;
 				prev_L = pos;
 				lastSteps = steps;
 				lastWait = wait;

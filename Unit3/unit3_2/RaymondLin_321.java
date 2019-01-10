@@ -5,7 +5,7 @@ public class RaymondLin_321
 	public static void main(String[] args) 
 	{
 		final long startTime = System.nanoTime();
-		System.out.println(power(1.0005,5000));
+		System.out.println(power1(1.0005,5000));
 		final long endTime = System.nanoTime();
 		System.out.println("Total execution time: " + (endTime - startTime));
 	}
@@ -19,19 +19,13 @@ public class RaymondLin_321
 		}
 		return x*a*a;
 	}
-
 	public static double power1(double x, long n)
 	{
-		if(n==1)
-			return x;
+		if(n==1) return x;
 		if(n%2 == 0)
 		{
-			return power1(x,n/2)*power1(x,n/2);
+			return power1(x*x, n/2);
 		}
-		else
-		{
-			return x*power1(x,n-1);
-		}
-			
+		return x*power1(x,n-1);
 	}
 }

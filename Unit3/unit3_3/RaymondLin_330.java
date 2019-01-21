@@ -12,7 +12,8 @@ public class RaymondLin_330
 			data[i] = (int)(Math.random()*20 + 1);
 		}
 		System.out.println(Arrays.toString(data));
-		mergeSort(data,0, data.length - 1);
+//		mergeSort(data,0, data.length - 1);
+		merge_i(data);
 		System.out.println(Arrays.toString(data));
 	}
 
@@ -68,6 +69,17 @@ public class RaymondLin_330
 			ia++;
 			id++;
 		}
-		System.out.println(Arrays.toString(data));
+		//System.out.println(Arrays.toString(data));
+	}
+	//333
+	public static void merge_i(int[] data)
+	{
+		for(int groupSize = 1; groupSize < data.length; groupSize *= 2)
+		{
+			for(int n = 0; n < data.length; n+=groupSize)	//n is position of first element in section to be merged
+			{
+				merge(data, n, n+groupSize);
+			}
+		}
 	}
 }

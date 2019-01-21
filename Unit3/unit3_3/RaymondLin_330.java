@@ -6,15 +6,16 @@ public class RaymondLin_330
 {
 	public static void main(String[] args)
 	{
-		int[] data = new int[10];
+		int[] data = new int[20];
 		for(int i = 0; i < data.length; i++)
 		{
-			data[i] = (int)(Math.random()*10 + 1);
+			data[i] = (int)(Math.random()*20 + 1);
 		}
 		System.out.println(Arrays.toString(data));
 		mergeSort(data,0, data.length - 1);
 		System.out.println(Arrays.toString(data));
 	}
+
 	static void mergeSort(int[] data, int from, int to)
 	{
 		if(from < to)
@@ -25,7 +26,6 @@ public class RaymondLin_330
 		}
 			
 	}
-	//331
 	public static void print(int[] data, int from, int to)
 	{
 		System.out.println();
@@ -35,6 +35,7 @@ public class RaymondLin_330
 		}
 		System.out.println();
 	}
+	//332
 	public static void merge(int[] data, int from, int to)
 	{
 		int[] aux = new int[to - from + 1];
@@ -44,10 +45,10 @@ public class RaymondLin_330
 			aux[i] = data[i+from];
 		}
 		int ia = 0;
-		int ib = aux.length/2;
+		int ib = (aux.length-1)/2 + 1;
 		int id = from;
 		
-		while(ia < aux.length/2 && ib < aux.length)
+		while(ia <= (aux.length-1)/2  && ib < aux.length)
 		{
 			if(aux[ia] < aux[ib])
 			{
@@ -61,7 +62,7 @@ public class RaymondLin_330
 			}
 			id++;
 		}
-		while(ia < aux.length/2)
+		while(ia <= (aux.length-1)/2)
 		{
 			data[id] = aux[ia];
 			ia++;

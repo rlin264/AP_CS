@@ -10,6 +10,7 @@ public class FactorialApp {
 		System.out.print("Find factorial of: ");
 		int n = sc.nextInt();
 		System.out.println("Factorial: " + factorial(n));
+		sc.close();
 	}
 	
 	public static int factorial(int n){

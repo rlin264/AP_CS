@@ -18,7 +18,7 @@ public class RaymondLin_330
 //		System.out.println(Arrays.toString(data));
 		
 		int[] data1 = new int[] {6,7,10,15,8};
-		merge(data1,0,4);
+		mergeSort(data1,0,data.length-1);
 		System.out.println(Arrays.toString(data1));
 	}
 
@@ -56,7 +56,6 @@ public class RaymondLin_330
 		}
 		int ia = 0;
 		int ib = (aux.length-1)/2 + 1;
-		System.out.println(ib);
 		int id = from;
 		
 		while(ia <= (aux.length-1)/2  && ib < aux.length)
@@ -72,7 +71,6 @@ public class RaymondLin_330
 				ib++;
 			}
 			id++;
-			//System.out.println("ia " + ia + " ib " + ib + " id " + id);
 		}
 		while(ia <= (aux.length-1)/2)
 		{

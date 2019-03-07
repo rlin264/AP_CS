@@ -5,7 +5,7 @@ public class RaymondLin_321
 	public static void main(String[] args) 
 	{
 		final long startTime = System.nanoTime();
-		System.out.println(power1(1.0005,5000));
+		System.out.println(power(1.0005,5000));
 		final long endTime = System.nanoTime();
 		System.out.println("Total execution time: " + (endTime - startTime));
 	}

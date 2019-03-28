@@ -43,78 +43,78 @@ class PiggyBank											//PiggyBank object that holds coins
 	private double total;								//value for the total value in the PiggyBank
 	DecimalFormat df = new DecimalFormat("#.00");		//DecimalFormat for rounding to 2 decimal places
 	
-	public PiggyBank()
+	public PiggyBank()									//default constructor giving 5 of each coin
 	{
-		pennies = nickels = dimes = quarters = 0;
+		pennies = nickels = dimes = quarters = 5;
 	}
-	public PiggyBank(int pennies, int nickels, int dimes, int quarters)
+	public PiggyBank(int pennies, int nickels, int dimes, int quarters)			//constructor giving the number of each coin
 	{
-		this.pennies = pennies;
+		this.pennies = pennies;													
 		this.nickels = nickels;
 		this.dimes = dimes;
 		this.quarters = quarters;
-		this.total = 0.01*pennies + 0.05*nickels + 0.10*dimes + 0.25*quarters;
-		this.total = (double)Math.round(this.total * 100d) / 100d;
+		this.total = 0.01*pennies + 0.05*nickels + 0.10*dimes + 0.25*quarters;	//calculate the total value
+		this.total = (double)Math.round(this.total * 100d) / 100d;				//round to 2 decimal places
 	}
 	public void showTotal()
 	{
-		total = 0.01*pennies + 0.05*nickels + 0.10*dimes + 0.25*quarters;
-		total = (double)Math.round(total * 100d) / 100d;
-		System.out.print("Pennies: " + pennies);
+		total = 0.01*pennies + 0.05*nickels + 0.10*dimes + 0.25*quarters;		//calculate total
+		total = (double)Math.round(total * 100d) / 100d;						//round to 2 decimal places
+		System.out.print("Pennies: " + pennies);								//print out the number of each coin
 		System.out.print(" Nickels: " + nickels);
 		System.out.print(" Dimes: " + dimes);
 		System.out.println(" Quarters: " + quarters);
-		System.out.println("$" + df.format(total));
+		System.out.println("$" + df.format(total));								//print total rounded to two decimal places
 	}
-	public void addPenny()
+	public void addPenny()		//method to add 1 penny
 	{
 		pennies += 1;
 	}
-	public void addNickel()
+	public void addNickel()		//method to add 1 nickel
 	{
 		nickels += 1;
 	}
-	public void addDime()
+	public void addDime()		//method to add 1 dime
 	{
 		dimes += 1;
 	}
-	public void addQuarter()
+	public void addQuarter()	//method to add 1 quarter
 	{
 		quarters += 1;
 	}
-	public void takeMoney(double money)
+	public void takeMoney(double money)	//method to take out money
 	{
-		if(money > total)
+		if(money > total)				//cannot withdraw if money to take out is greater than total
 		{
 			System.out.println("Not enough money in bank account");
 		}
 		else
 		{
-			while(money >= 0.25 && quarters > 0)
+			while(money >= 0.25 && quarters > 0)	//subtract quarters until no more quarters or all the desired money is taken out
 			{
 				quarters--;
 				money -= 0.25;
 				total -= 0.25;
 			}
-			while(money >= 0.10 && dimes > 0)
+			while(money >= 0.10 && dimes > 0)		//subtract dimes until no more dimes or all the desired money is taken out
 			{
 				dimes--;
 				money -= 0.10;
 				total -= 0.10;
 			}
-			while(money >= 0.05 && nickels > 0)
+			while(money >= 0.05 && nickels > 0)		//subtract nickels until no more nickels or all the desired money is taken out
 			{
 				nickels--;
 				money -= 0.05;
 				total -= 0.05;
 			}
-			while(money >= 0.01 && pennies > 0)
+			while(money >= 0.01 && pennies > 0)		//subtract pennies until no more pennies or all the desired money is taken out
 			{
 				pennies--;
 				money -= 0.01;
 				total -= 0.01;
 			}
-			total = (double)Math.round(total * 100d) / 100d;
+			total = (double)Math.round(total * 100d) / 100d;	//round to 2 decimals
 		}
 	}
 }

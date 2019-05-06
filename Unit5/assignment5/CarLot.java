@@ -17,11 +17,15 @@ abstract class Vehicle
 	
 	public void setVehicleStatus()
 	{
+		System.out.println("Change Status");
+		System.out.println("(1) On the lot");
+		System.out.println("(2) In Maintenance");
+		System.out.println("(3) Rented Out");
+		System.out.println("Enter your choice");
 		int inp = sc.nextInt();
 		if(inp == 1) status = "on the lot";
 		else if(inp == 2) status = "in maintenance";
 		else status = "rented out";
-		this.status = status;
 	}
 	public String getVehicleStatus()
 	{

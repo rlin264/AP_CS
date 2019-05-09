@@ -8,15 +8,18 @@ public class SalesCenter
 
 	public static void main(String[] args)
 	{
-		Scanner sc = new Scanner(System.in);
-		NumberFormat money = NumberFormat.getCurrencyInstance();
+		Scanner sc = new Scanner(System.in);					//Initialize scanner to accept user input
+		NumberFormat money = NumberFormat.getCurrencyInstance();//Initialize number format to format numbers properly when printing
 		
-		String input;
-		int empNum;
-		double hours;
+		String input;	//user input String
+		int empNum;		//user input for employee number
+		double hours;	//user input for employee hours
+		
+		//Initialize employees
 		Employee d = new Manager("Diego", "Martin", 55000);
 		Employee k = new Associate("Kylie", "Walter", 18.50);
 		Employee m = new Associate("Michael", "Rose", 16.75);
+		
 		System.out.println("Select one of the following options:");
 		
 		while(true)
@@ -25,14 +28,15 @@ public class SalesCenter
 			System.out.println("(P)ay");
 			System.out.println("(Q)uit");
 			System.out.println("Enter your choice: ");
-			input = sc.next();
-			if(input.toLowerCase().equals("e"))
+			input = sc.next(); 	//accept user input
+			if(input.toLowerCase().equals("e"))	//first option of employee number. Accept either capital or lowercase
 			{
 				System.out.println("Enter your employee number (1,2 or 3): ");
-				empNum = sc.nextInt();
+				empNum = sc.nextInt();	//user input for employee number
+				//call toString method of employees
 				if(empNum == 1)
 				{
-					System.out.println(d.toString());
+					System.out.println(d.toString());	
 				}
 				else if(empNum == 2)
 				{
@@ -43,21 +47,22 @@ public class SalesCenter
 					System.out.println(m.toString());
 				}
 			}
-			else if(input.toLowerCase().equals("p"))
+			else if(input.toLowerCase().equals("p")) //second option of employee pay. Accept either capital or lowercase
 			{
 				System.out.println("Enter your employee number (1,2 or 3): ");
 				empNum = sc.nextInt();
-				if(empNum == 1)
+				if(empNum == 1) //Manager
 				{
-					System.out.println(money.format(d.pay(2)));
+					System.out.println(money.format(d.pay(2)));	//print biweekly pay of the Manager
 				}
-				else
+				else			//Associates
 				{
 					System.out.println("Enter number of hours worked:");
-					hours = sc.nextDouble();
+					hours = sc.nextDouble();					//user input of employee hours
+					//print pay of the associate dependent on the hours worked.
 					if(empNum == 2)
 					{	
-						System.out.println(money.format(k.pay(hours)));
+						System.out.println(money.format(k.pay(hours)));	
 					}
 					else
 					{
@@ -65,65 +70,66 @@ public class SalesCenter
 					}
 				}
 			}
-			else
+			else	//input of q will lead to a break and exiting of the program.
 			{
 				break;
 			}
 		}
-		
 	}
-	
 }
 
+//abstract class Employee
 abstract class Employee
 {
-	String firstName, lastName;
-	public Employee(String firstName, String lastName)
+	String firstName, lastName;	//instance variables
+	public Employee(String firstName, String lastName) //constructor given first and last names
 	{
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}
-	abstract double pay(double period);
+	abstract double pay(double period);	//abstract method to calculate pay for a given time period
 }
+//Manager class which inherits abstract Employee class
 class Manager extends Employee
 {
-	double yearSalary;
+	double yearSalary;	//instance variable for yearly salary.
 
-	public Manager(String firstName, String lastName, double yearSalary)
+	public Manager(String firstName, String lastName, double yearSalary)//constructor given first/last name and yearly salary.
 	{
-		super(firstName,lastName);
+		super(firstName,lastName);		//give first/last name to superclass constructor
 		this.yearSalary = yearSalary;
 	}
-	public double getSalary()
+	public double getSalary()			//accessor for yearSalary
 	{
 		return yearSalary;
 	}
-	public double pay(double weeks)
+	public double pay(double weeks)		//method pay given an input for the number of weeks.
 	{
-		return yearSalary/52*weeks;
+		return yearSalary/52*weeks;	
 	}
-	public String toString()
+	public String toString()			//method to display a string of the relevant ID of the employee.
 	{
-		return super.firstName + " " + lastName + ", " + "Manager";
+		return firstName + " " + lastName + ", " + "Manager";
 	}
 }
+//Associate class which inherits abstract Employee class
 class Associate extends Employee
 {
-	double hourPayRate;
-	public Associate(String firstName, String lastName, double hourPayRate)
+	double hourPayRate;	//instance variable for the hourly pay rate
+	public Associate(String firstName, String lastName, double hourPayRate)	//constructor with a given first/last name and hourly pay rate.
 	{
-		super(firstName,lastName);
-		this.hourPayRate = hourPayRate;
+		super(firstName,lastName);		//give first/last name to superclass constructor
+		this.hourPayRate = hourPayRate;	
 	}
-	public double getRate()
+	public double getRate()			//accessor for hourly pay rate
 	{
-		return hourPayRate;
+		return hourPayRate;	
 	}
-	public double pay(double hours)
+	public double pay(double hours)	//calculate pay using hours worked
 	{
 		return hours*hourPayRate;
 	}
-	public String toString()
+	public String toString()		//method to display a string of the relevant ID of the employee.
 	{
 		return super.firstName + " " + lastName + ", " + "Associate";
 	}

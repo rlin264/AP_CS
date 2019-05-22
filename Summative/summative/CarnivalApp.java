@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class CarnivalApp 
 {
-	public static void Main(String[] args)
+	public static void main(String[] args)
 	{
 		Player player = new Player(20);
 		GameBooth redBlack = new redBlack();
@@ -33,8 +33,6 @@ class Player
 		{
 			System.out.println("You are out of money");
 		}
-			
-		
 	}
 }
 abstract class GameBooth
@@ -69,7 +67,7 @@ class redBlack extends GameBooth
 		System.out.println("If all 3 tokens are the same colour (red or black), win a Plush Fish, else win a Keychain");
 		for(int i = 0; i < 3; i++)
 		{
-			System.out.println("Press enter to draw a token"); sc.next();
+			System.out.println("\nPress enter to draw a token"); sc.nextLine();
 			if(Math.random() > 0.5)
 			{
 				System.out.println("You drew a red token!");
@@ -84,8 +82,20 @@ class redBlack extends GameBooth
 		}
 		else
 		{
-			System.out.println("You won the Large Prize!");
+			System.out.println("You won the Small Prize!");
 			return 2;
 		}
+	}
+}
+class pennyToss extends GameBooth
+{
+	Scanner sc = new Scanner(System.in);
+	public pennyToss()
+	{
+		super(3, "Poster", "Plus Tiger");
+	}
+	public int start()
+	{
+		return -1;
 	}
 }

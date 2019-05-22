@@ -75,6 +75,7 @@ public class SalesCenter
 				break;
 			}
 		}
+		sc.close();
 	}
 }
 

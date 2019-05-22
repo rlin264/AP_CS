@@ -60,7 +60,7 @@ public class CarLot
 	}
 }
 
-class Vehicle
+abstract class Vehicle
 {
 	//declaration of instance variables
 	int year;
@@ -75,19 +75,8 @@ class Vehicle
 		this.colour = colour;
 		this.status = status;
 	}
-	public void setVehicleStatus()		//set the status of a vehicle. This method is the same for all subclasses and is available through this superclass.
-	{
-		System.out.println("Change Status");
-		System.out.println("(1) On the lot");
-		System.out.println("(2) In Maintenance");
-		System.out.println("(3) Rented Out");
-		System.out.println("Enter your choice");
-		int inp = sc.nextInt();		//ask for user input to choose what the status is
-		//change status depending on input
-		if(inp == 1) status = "on the lot";
-		else if(inp == 2) status = "in maintenance";
-		else status = "rented out";
-	}
+	abstract void setVehicleStatus();	//abstract method for setting vehicle status
+
 	public String getVehicleStatus()	//return string for vehicle status
 	{
 		return "The vehicle is " + status;
@@ -109,6 +98,19 @@ class Car extends Vehicle
 		this.fuelType = fuelType;
 		this.numDoors = numDoors;
 	}
+	public void setVehicleStatus()		//set the status of a vehicle. This method is the same for all subclasses and is available through this superclass.
+	{
+		System.out.println("Change Status");
+		System.out.println("(1) On the lot");
+		System.out.println("(2) In Maintenance");
+		System.out.println("(3) Rented Out");
+		System.out.println("Enter your choice");
+		int inp = sc.nextInt();		//ask for user input to choose what the status is
+		//change status depending on input
+		if(inp == 1) status = "on the lot";
+		else if(inp == 2) status = "in maintenance";
+		else status = "rented out";
+	}
 	public String toString() {	//output the vehicle information in a string
 
 		return year +  " " + make + " " + model + "\n" + colour + "\n" + fuelType + ", " + numDoors + " doors";
@@ -127,6 +129,19 @@ class Minivan extends Vehicle
 		this.numDoors = numDoors;
 		this.rowsSeats = rowsSeats;
 	}
+	public void setVehicleStatus()		//set the status of a vehicle. This method is the same for all subclasses and is available through this superclass.
+	{
+		System.out.println("Change Status");
+		System.out.println("(1) On the lot");
+		System.out.println("(2) In Maintenance");
+		System.out.println("(3) Rented Out");
+		System.out.println("Enter your choice");
+		int inp = sc.nextInt();		//ask for user input to choose what the status is
+		//change status depending on input
+		if(inp == 1) status = "on the lot";
+		else if(inp == 2) status = "in maintenance";
+		else status = "rented out";
+	}
 	public String toString() //output the vehicle information in a string
 	{
 		return year +  " " + make + " " + model + "\n" + colour + "\n" + fuelType + ", " + numDoors + " doors" + ", " + rowsSeats + " rows of seats";
@@ -143,6 +158,19 @@ class Truck extends Vehicle
 		this.fuelType = fuelType;
 		this.numDoors = numDoors;
 		this.engineCylinders = engineCylinders;
+	}
+	public void setVehicleStatus()		//set the status of a vehicle. This method is the same for all subclasses and is available through this superclass.
+	{
+		System.out.println("Change Status");
+		System.out.println("(1) On the lot");
+		System.out.println("(2) In Maintenance");
+		System.out.println("(3) Rented Out");
+		System.out.println("Enter your choice");
+		int inp = sc.nextInt();		//ask for user input to choose what the status is
+		//change status depending on input
+		if(inp == 1) status = "on the lot";
+		else if(inp == 2) status = "in maintenance";
+		else status = "rented out";
 	}
 	public String toString() //output the vehicle information in a string
 	{

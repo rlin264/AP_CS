@@ -9,7 +9,9 @@ public class CarnivalApp
 	{
 		Player player = new Player(20);
 		GameBooth redBlack = new redBlack();
-		player.play(redBlack);
+		GameBooth pennyToss = new pennyToss();
+		GameBooth skeetShooting = new skeetShooting();
+		player.play(skeetShooting);
 	}
 }
 class Player
@@ -40,6 +42,8 @@ abstract class GameBooth
 	double cost;
 	String smallPrize;
 	String largePrize;
+	int sPrizesGiven;
+	int lPrizesGiven;
 	public GameBooth(double cost, String smallPrize, String largePrize)
 	{
 		this.cost = cost;
@@ -77,12 +81,14 @@ class redBlack extends GameBooth
 		}
 		if(cnt == 0 || cnt == 3)
 		{
-			System.out.println("You won the Large Prize!");
+			System.out.println("You won the Large Prize: " + this.largePrize);
+			this.lPrizesGiven++;
 			return 1;
 		}
 		else
 		{
-			System.out.println("You won the Small Prize!");
+			System.out.println("You won the Small Prize: " + this.smallPrize);
+			this.sPrizesGiven++;
 			return 2;
 		}
 	}
@@ -90,12 +96,107 @@ class redBlack extends GameBooth
 class pennyToss extends GameBooth
 {
 	Scanner sc = new Scanner(System.in);
+	String[][] board;
+	String[][] originalBoard = new String[][]{{"Poster", "Poster", "Plush Tiger", ""},
+								{"", "Plush Tiger", "", "Poster"},
+								{"Poster","","Poster",""},
+								{"","","","Plush Tiger"}};
+//	int[][] squaresHit = new int[4][4];
 	public pennyToss()
 	{
-		super(3, "Poster", "Plus Tiger");
+		super(3, "Poster", "Plush Tiger");
 	}
 	public int start()
 	{
+		board = new String[][]{{"Poster", "Poster", "Plush Tiger", ""},
+				{"", "Plush Tiger", "", "Poster"},
+				{"Poster","","Poster",""},
+				{"","","","Plush Tiger"}};
+		int largeCnt = 0;
+		int smallCnt = 0;
+		System.out.println("Welcome to Penny Toss");
+		System.out.println("Toss 3 pennies onto the board");
+		System.out.println("If all three pennies cover three Plush Tiger tiles, win the Plush Tiger");
+		System.out.println("If any penny covers a Poster tile, win a Poster");
+		printBoard();
+		for(int i = 0; i < 3; i++)
+		{
+			System.out.println("\nPress enter to throw a penny"); sc.nextLine();
+			int x = (int)(Math.random()*4);
+			int y = (int)(Math.random()*4);
+			board[x][y]+= " x";
+			if(originalBoard[x][y].equals("Plush Tiger")) largeCnt++;
+			else if(originalBoard[x][y].equals("Poster")) smallCnt++;
+			printBoard();
+		}
+		if(largeCnt == 3)
+		{
+			System.out.println("You won the Large Prize: " + this.largePrize);
+			this.lPrizesGiven++;
+			return 1;
+		}
+		else if(smallCnt > 0)
+		{
+			System.out.println("You won the Small Prize: " + this.smallPrize);
+			this.sPrizesGiven++;
+			return 2;
+		}
+		else
+		{
+			System.out.println("You lose :(");
+			return 0;
+		}
+	}
+	public void printBoard()
+	{
+		for(int i = 0; i < board.length; i++)
+		{
+			for(int j = 0; j < board[0].length; j++)
+			{
+				System.out.printf("|%-15s|", board[i][j]);
+			}
+			System.out.println();
+		}
+	}
+}
+class skeetShooting extends GameBooth
+{
+	public skeetShooting()
+	{
+		super(2, "Toy Car", "Plush Dragon");
+	}
+	public int start()
+	{
+		shoot();
 		return -1;
 	}
+	public void shoot()
+	{
+		try
+		{
+		    Thread.sleep((int)Math.random()*2000+500);
+		}
+		catch(InterruptedException ex)
+		{
+		    Thread.currentThread().interrupt();
+		}
+		printCircle();
+	}
+	public void printCircle() { 
+		  
+	    double dist; 
+	    int radius = 4;
+	    for (int i = 0; i <= 2 * radius; i++) { 
+		    for (int j = 0; j <= 2 * radius; j++) { 
+		        dist = Math.sqrt((i - radius) * (i - radius) + 
+		                         (j - radius) * (j - radius)); 
+		        if (dist > radius - 0.5 && dist < radius + 0.5) 
+		        System.out.print("* "); 
+		        else
+		        System.out.print("  "); 
+		    } 
+
+	    System.out.print("\n"); 
+	    } 
+	} 
 }

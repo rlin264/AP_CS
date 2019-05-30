@@ -9,11 +9,62 @@ public class CarnivalApp
 {
 	public static void main(String[] args)
 	{
+		Scanner sc = new Scanner(System.in);
+		String inp = "";
+		
+		
 		Player player = new Player(20);
+		boolean[] canPlay = new boolean[] {true,true,true};
 		GameBooth redBlack = new redBlack();
 		GameBooth pennyToss = new pennyToss();
 		GameBooth skeetShooting = new skeetShooting();
-		player.play(skeetShooting);
+//		player.play(skeetShooting);
+		System.out.println("Welcome to the Carnival!");
+		System.out.println("Choose one of the options");
+		while(true)
+		{
+			System.out.println("Choose one of the options");
+			System.out.println("(G) Play a game\n(P) See Prizes\n(Q) Quit");
+			System.out.println("Enter your choice");
+			if(sc.hasNextLine())
+			inp = sc.nextLine();
+			if(inp.toLowerCase().equals("g"))
+			{
+				//Game code
+				System.out.println("Which game would you like to play?");
+				System.out.println("(1) Red or Black\n(2) Penny Toss\n(3) Skeet Shooting");
+				inp = sc.nextLine();
+				if(inp.equals("1")) canPlay[0] = player.play(redBlack);
+				else if(inp.equals("2")) canPlay[1] = player.play(pennyToss);
+				else canPlay[2] = player.play(skeetShooting);
+				
+				if(canPlay[0] == false && canPlay[1] == false && canPlay[2] == false)
+				{
+					System.out.println(Arrays.toString((player.prizesWon.toArray())));
+					redBlack.prizesAwarded();
+					pennyToss.prizesAwarded();
+					skeetShooting.prizesAwarded();
+					break;
+				}
+			}
+			else if(inp.toLowerCase().equals("p"))
+			{
+				System.out.println("Which game would you like to see the prizes for?");
+				System.out.println("(1) Red or Black\n(2) Penny Toss\n(3) Skeet Shooting");
+				inp = sc.next();
+				if(inp.equals("1")) redBlack.printPrizes();
+				else if(inp.equals("2")) pennyToss.printPrizes();
+				else skeetShooting.printPrizes();
+			}
+			else
+			{
+				System.out.println(Arrays.toString((player.prizesWon.toArray())));
+				redBlack.prizesAwarded();
+				pennyToss.prizesAwarded();
+				skeetShooting.prizesAwarded();
+				break;
+			}
+		}
 	}
 }
 class Player
@@ -25,18 +76,24 @@ class Player
 	{
 		this.spendingMoney = spendingMoney;
 	}
-	public void play(GameBooth game)
+	public boolean play(GameBooth game)
 	{
 		if(spendingMoney > game.getCost()){
 			spendingMoney -= game.getCost();
 			result = game.start();
 			if(result == 1) prizesWon.add(game.largePrize);
 			else if(result == 2) prizesWon.add(game.smallPrize);
+			return true;
 		}
 		else
 		{
 			System.out.println("You are out of money");
+			return false;
 		}
+	}
+	public double getMoney()
+	{
+		return spendingMoney;
 	}
 }
 abstract class GameBooth
@@ -44,18 +101,28 @@ abstract class GameBooth
 	double cost;
 	String smallPrize;
 	String largePrize;
+	String name;
 	int sPrizesGiven;
 	int lPrizesGiven;
-	public GameBooth(double cost, String smallPrize, String largePrize)
+	public GameBooth(double cost, String smallPrize, String largePrize, String name)
 	{
 		this.cost = cost;
 		this.smallPrize = smallPrize;
 		this.largePrize = largePrize;
+		this.name = name;
 	}
 	abstract int start();
 	public double getCost()
 	{
 		return cost;
+	}
+	public void printPrizes()
+	{
+		System.out.println("The large prize is " + this.largePrize + " and the small prize is " + this.smallPrize);
+	}
+	public void prizesAwarded()
+	{
+		System.out.println(name + " gave out " + sPrizesGiven + " small prizes and " + lPrizesGiven + "large prizes.");
 	}
 }
 class redBlack extends GameBooth
@@ -63,7 +130,7 @@ class redBlack extends GameBooth
 	Scanner sc = new Scanner(System.in);
 	public redBlack()
 	{
-		super(1.50, "Plush Fish", "Keychain");
+		super(1.50, "Plush Fish", "Keychain", "Red or Black");
 	}
 	public int start()
 	{
@@ -103,10 +170,9 @@ class pennyToss extends GameBooth
 								{"", "Plush Tiger", "", "Poster"},
 								{"Poster","","Poster",""},
 								{"","","","Plush Tiger"}};
-//	int[][] squaresHit = new int[4][4];
 	public pennyToss()
 	{
-		super(3, "Poster", "Plush Tiger");
+		super(3, "Poster", "Plush Tiger", "Penny Toss");
 	}
 	public int start()
 	{
@@ -165,7 +231,7 @@ class skeetShooting extends GameBooth
 {
 	public skeetShooting()
 	{
-		super(2, "Toy Car", "Plush Dragon");
+		super(2, "Toy Car", "Plush Dragon", "Skeet Shooting");
 	}
 	public int start()
 	{
@@ -181,27 +247,28 @@ class skeetShooting extends GameBooth
 		String s = makeSkeet();
 		long startTime = System.currentTimeMillis();
 		boolean complete = aim(s);
-		System.out.println(complete);
 		long endTime = System.currentTimeMillis();
 		double seconds = (endTime - startTime) / 1000.0;
 		if(complete)
 		{
 			System.out.println("You shot in " + df.format(seconds) + "!");
-			if(seconds < 4)
+			if(seconds < 3)
 			{
-				System.out.println("That's under 4 seconds! You hit the skeet dead on!");
+				System.out.println("That's under 3 seconds! You hit the skeet dead on!");
 				System.out.println("You won the Large Prize: " + this.largePrize);
+				this.lPrizesGiven++;
 				return 1;
 			}
-			else if(seconds < 4.5)
+			else if(seconds < 4)
 			{
-				System.out.println("That's under 4.5 seconds! You hit the skeet!");
+				System.out.println("That's under 4 seconds! You hit the skeet!");
 				System.out.println("You won the Small Prize: " + this.smallPrize);
+				this.sPrizesGiven++;
 				return 2;
 			}
 			else
 			{
-				System.out.println("That's over 4.5 seconds! Too slow!");
+				System.out.println("That's over 4 seconds! Too slow!");
 				System.out.println("You missed");
 				return 0;
 			}
@@ -249,7 +316,7 @@ class skeetShooting extends GameBooth
 		boolean complete = true;
 		for(int i = 0;i < 5; i++)
 		{
-			if(!sc.nextLine().equals(Character.toString(inputs[i])))
+			if(!sc.next().equals(Character.toString(inputs[i])))
 			{
 				complete = false;
 			}

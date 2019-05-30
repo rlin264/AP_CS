@@ -1,6 +1,8 @@
 package summative;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class CarnivalApp 
@@ -167,11 +169,7 @@ class skeetShooting extends GameBooth
 	}
 	public int start()
 	{
-		shoot();
-		return -1;
-	}
-	public void shoot()
-	{
+		DecimalFormat df = new DecimalFormat("#0.00");
 		try
 		{
 		    Thread.sleep((int)Math.random()*2000+500);
@@ -180,23 +178,83 @@ class skeetShooting extends GameBooth
 		{
 		    Thread.currentThread().interrupt();
 		}
-		printCircle();
+		String s = makeSkeet();
+		long startTime = System.currentTimeMillis();
+		boolean complete = aim(s);
+		System.out.println(complete);
+		long endTime = System.currentTimeMillis();
+		double seconds = (endTime - startTime) / 1000.0;
+		if(complete)
+		{
+			System.out.println("You shot in " + df.format(seconds) + "!");
+			if(seconds < 4)
+			{
+				System.out.println("That's under 4 seconds! You hit the skeet dead on!");
+				System.out.println("You won the Large Prize: " + this.largePrize);
+				return 1;
+			}
+			else if(seconds < 4.5)
+			{
+				System.out.println("That's under 4.5 seconds! You hit the skeet!");
+				System.out.println("You won the Small Prize: " + this.smallPrize);
+				return 2;
+			}
+			else
+			{
+				System.out.println("That's over 4.5 seconds! Too slow!");
+				System.out.println("You missed");
+				return 0;
+			}
+		}
+		else
+		{
+			System.out.println("You missed!");
+			return 0;
+		}
 	}
-	public void printCircle() { 
-		  
+	public String makeSkeet() {
+		String[] letters = new String[]{"w", "a", "s", "d"};
+		String s = "";
+		int s_ind = 0;
+		for(int i = 0; i < 5; i++)
+		{
+			s += letters[(int)(Math.random()*4)];
+		}
 	    double dist; 
 	    int radius = 4;
 	    for (int i = 0; i <= 2 * radius; i++) { 
 		    for (int j = 0; j <= 2 * radius; j++) { 
 		        dist = Math.sqrt((i - radius) * (i - radius) + 
 		                         (j - radius) * (j - radius)); 
-		        if (dist > radius - 0.5 && dist < radius + 0.5) 
-		        System.out.print("* "); 
+		        if (dist > radius - 0.5 && dist < radius + 0.5) System.out.print("* "); 
+		        else if(i == 4 && (j > 1 && j < 7))
+		        {
+		        	System.out.print(s.charAt(s_ind) + " ");
+		        	s_ind++;
+		        }
 		        else
-		        System.out.print("  "); 
+		        {
+		        	System.out.print("  ");
+		        }
 		    } 
-
 	    System.out.print("\n"); 
-	    } 
-	} 
+	    }
+	    return s;
+	}
+	public boolean aim(String s)
+	{
+		Scanner sc = new Scanner(System.in);
+		char[] inputs = s.toCharArray();
+//		System.out.println(Arrays.toString(inputs));
+		boolean complete = true;
+		for(int i = 0;i < 5; i++)
+		{
+			if(!sc.nextLine().equals(Character.toString(inputs[i])))
+			{
+				complete = false;
+			}
+		}
+		sc.close();
+		return complete;
+	}
 }

@@ -10,42 +10,42 @@ public class CarnivalApp
 	public static void main(String[] args)
 	{
 		Scanner sc = new Scanner(System.in);
+		DecimalFormat df = new DecimalFormat("#0.00");
+		
 		String inp = "";
-		
-		
-		Player player = new Player(20);
-		boolean[] canPlay = new boolean[] {true,true,true};
+		Player player = new Player(15);
 		GameBooth redBlack = new redBlack();
 		GameBooth pennyToss = new pennyToss();
 		GameBooth skeetShooting = new skeetShooting();
-//		player.play(skeetShooting);
 		System.out.println("Welcome to the Carnival!");
 		System.out.println("Choose one of the options");
+		System.out.println("You have $" + df.format(player.getMoney()));
+		System.out.println("(G) Play a game\n(P) See Prizes\n(Q) Quit");
+		System.out.println("Enter your choice");
 		while(true)
 		{
-			System.out.println("Choose one of the options");
-			System.out.println("(G) Play a game\n(P) See Prizes\n(Q) Quit");
-			System.out.println("Enter your choice");
-			if(sc.hasNextLine())
 			inp = sc.nextLine();
 			if(inp.toLowerCase().equals("g"))
 			{
 				//Game code
 				System.out.println("Which game would you like to play?");
-				System.out.println("(1) Red or Black\n(2) Penny Toss\n(3) Skeet Shooting");
+				System.out.println("(1) Red or Black ($1.50)\n(2) Penny Toss ($3.00)\n(3) Skeet Shooting ($2.00)");
 				inp = sc.nextLine();
-				if(inp.equals("1")) canPlay[0] = player.play(redBlack);
-				else if(inp.equals("2")) canPlay[1] = player.play(pennyToss);
-				else canPlay[2] = player.play(skeetShooting);
+				if(inp.equals("1")) player.play(redBlack);
+				else if(inp.equals("2")) player.play(pennyToss);
+				else player.play(skeetShooting);
 				
-				if(canPlay[0] == false && canPlay[1] == false && canPlay[2] == false)
+				if(player.getMoney() < 1.50)
 				{
-					System.out.println(Arrays.toString((player.prizesWon.toArray())));
+					System.out.println("You don't have enough money left to play any games");
+					System.out.println("Prizes: " + Arrays.toString((player.prizesWon.toArray())));
 					redBlack.prizesAwarded();
 					pennyToss.prizesAwarded();
 					skeetShooting.prizesAwarded();
 					break;
 				}
+				
+				System.out.println("Press enter to continue");
 			}
 			else if(inp.toLowerCase().equals("p"))
 			{
@@ -56,13 +56,20 @@ public class CarnivalApp
 				else if(inp.equals("2")) pennyToss.printPrizes();
 				else skeetShooting.printPrizes();
 			}
-			else
+			else if(inp.toLowerCase().equals("q"))
 			{
 				System.out.println(Arrays.toString((player.prizesWon.toArray())));
 				redBlack.prizesAwarded();
 				pennyToss.prizesAwarded();
 				skeetShooting.prizesAwarded();
 				break;
+			}
+			else
+			{
+				System.out.println("Choose one of the options");
+				System.out.println("You have $" + df.format(player.getMoney()));
+				System.out.println("(G) Play a game\n(P) See Prizes\n(Q) Quit");
+				System.out.println("Enter your choice");
 			}
 		}
 	}
@@ -76,19 +83,17 @@ class Player
 	{
 		this.spendingMoney = spendingMoney;
 	}
-	public boolean play(GameBooth game)
+	public void play(GameBooth game)
 	{
 		if(spendingMoney > game.getCost()){
 			spendingMoney -= game.getCost();
 			result = game.start();
 			if(result == 1) prizesWon.add(game.largePrize);
 			else if(result == 2) prizesWon.add(game.smallPrize);
-			return true;
 		}
 		else
 		{
-			System.out.println("You are out of money");
-			return false;
+			System.out.println("You don't have enough money to play " + game.name);
 		}
 	}
 	public double getMoney()
@@ -122,7 +127,7 @@ abstract class GameBooth
 	}
 	public void prizesAwarded()
 	{
-		System.out.println(name + " gave out " + sPrizesGiven + " small prizes and " + lPrizesGiven + "large prizes.");
+		System.out.println(name + " gave out " + sPrizesGiven + " small prizes and " + lPrizesGiven + " large prizes.");
 	}
 }
 class redBlack extends GameBooth
@@ -130,7 +135,7 @@ class redBlack extends GameBooth
 	Scanner sc = new Scanner(System.in);
 	public redBlack()
 	{
-		super(1.50, "Plush Fish", "Keychain", "Red or Black");
+		super(1.50, "Keychain", "Plush Fish", "Red or Black");
 	}
 	public int start()
 	{
@@ -235,10 +240,17 @@ class skeetShooting extends GameBooth
 	}
 	public int start()
 	{
+		Scanner sc = new Scanner(System.in);
 		DecimalFormat df = new DecimalFormat("#0.00");
+		System.out.println("Welcome to Skeet Shooting");
+		System.out.println("A skeet will be shot and displayed on the screen. The skeet will have a sequence of the letters WASD.");
+		System.out.println("Type the letters in order with an enter in between each one to aim and shoot at the skeet");
+		System.out.println("Aim properly at the skeet in under 3 seconds to earn the Plush Dragon, under 4 to earn the Toy Car.");
+		System.out.println("If over 4 seconds or you aim badly (wrong inputs) you will miss the skeet and get nothing.");
+		System.out.println("\nPress enter to start Skeet Shooting"); sc.nextLine();
 		try
 		{
-		    Thread.sleep((int)Math.random()*2000+500);
+		    Thread.sleep((int)Math.random()*3000+500);
 		}
 		catch(InterruptedException ex)
 		{
@@ -316,12 +328,11 @@ class skeetShooting extends GameBooth
 		boolean complete = true;
 		for(int i = 0;i < 5; i++)
 		{
-			if(!sc.next().equals(Character.toString(inputs[i])))
+			if(!sc.nextLine().equals(Character.toString(inputs[i])))
 			{
 				complete = false;
 			}
 		}
-		sc.close();
 		return complete;
 	}
 }

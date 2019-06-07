@@ -99,7 +99,7 @@ class Player
 	//method to play a game
 	public void play(GameBooth game)
 	{
-		if(spendingMoney > game.getCost()){	//check if the player has enough money to play the game
+		if(spendingMoney >= game.getCost()){	//check if the player has enough money to play the game
 			spendingMoney -= game.getCost();//subtract appropriate amount of money
 			result = game.start();			//start the game
 			//add the appropriate prize if the player won one
